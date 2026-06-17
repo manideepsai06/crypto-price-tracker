@@ -15,11 +15,15 @@ def fetch_data():
 
   lis=["BTC", "ETH", "BNB", "SOL", "XRP"]#list of coins which we need data for 
   Todays_dt=str(datetime.now())#extracting exact timestamp when the data is fetched
-
+  
+  #this loop checks whether listed coin is there or not from api response
+  #if its available then key will be created with symbol and another dictonary with all the details will be loaded
+  #example : 'BTC': {'symbol': 'BTC', 'Price': 65801.69323884316, 'Timestamp': '2026-06-17 09:38:40.828977'}
   for i in range(len(response)):
     if(response[i]["symbol"] in lis):
       first_Dict=dict()
-      first_Dict["Price"]=response[i]["quotes"]["USD"]["price"]
+      first_Dict["symbol"]=response[i]["symbol"]
+      first_Dict["Price"]=round(response[i]["quotes"]["USD"]["price"],3)
       first_Dict["Timestamp"]=Todays_dt
       dictonary[response[i]["symbol"]]=first_Dict
   return dictonary
